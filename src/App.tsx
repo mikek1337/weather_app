@@ -1,13 +1,14 @@
 
 import './App.css'
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/home/Home'
 function App() {
 
   return (
-    <div className="max-h-screen">
+    <div className="max-h-screen flex flex-row">
 
       <div className="shadow-xl rounded-full w-20 backdrop-blur-lg  h-[50em] border-2 my-10 mx-7 flex flex-col items-center">
-        <div className='rounded-full border-r-2 bg-white -z-2 p-2 absolute left-[3rem] top-[50%]'>
+        <div className='rounded-full border-r-2 bg-white -z-2 p-2 relative left-[3rem] top-[50%]'>
           <span>
             <svg className='w-7 h-7  ml-4'  fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -35,7 +36,13 @@ function App() {
         </span>
 
       </div>
-
+      <div className='my-10'>
+      <BrowserRouter>
+      <Routes>
+        <Route index element={<Home/>}></Route>
+      </Routes>
+      </BrowserRouter>
+      </div>
     </div>
   )
 }
