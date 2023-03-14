@@ -36,7 +36,7 @@ function App() {
         </span>
 
       </div>
-      <div className='my-10'>
+      <div className='my-10 ml-32'>
       <BrowserRouter>
       <Routes>
         <Route index element={<Home/>}></Route>
