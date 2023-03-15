@@ -1,0 +1,1 @@
+function UseFetchHook(url:string,options)

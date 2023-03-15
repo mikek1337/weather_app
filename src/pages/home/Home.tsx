@@ -3,7 +3,7 @@ import React from "react";
 function Home() {
     return (
         <div>
-            <div className="flex gap-32 ">
+            <div className="flex gap-16 ">
                 <div className="rounded-lg w-80 h-fit border-2 ">
                     <div className="p-2 mt-10">
                         <img src="cloudy.png" alt="" width="200px" height="200px" />
@@ -36,7 +36,7 @@ function Home() {
                 </div>
                 <div className="rounded-lg border-2 w-fit  flex">
                     <div className="p-2">
-                        <div className="rounded-lg border-2 w-72 h-fit p-5">
+                        <div className="rounded-lg border-2 w-60 h-fit p-5">
                             <h5 className="py-2">Wind status</h5>
                             <div className="m-auto py-6">
                                 <img className="m-auto" src="wind-energy.png" alt="" width="100px" height="100px" />
@@ -55,7 +55,7 @@ function Home() {
                         </div>
                     </div>
                     <div className="p-2">
-                        <div className="rounded-lg border-2 w-72 h-fit p-5">
+                        <div className="rounded-lg border-2 w-60 h-fit p-5">
                             <h5 className="py-2">UV index</h5>
                             <div className="m-auto py-6">
                                 <img className="m-auto" src="uv.png" alt="" width="100px" height="100px" />
@@ -74,7 +74,7 @@ function Home() {
                         </div>
                     </div>
                     <div className="p-2">
-                        <div className="rounded-lg border-2 w-72 h-fit p-5">
+                        <div className="rounded-lg border-2 w-60 h-fit p-5">
                             <h5 className="py-1">Sunrise and Sunset</h5>
                             <div className="m-auto py-6">
                                 <img className="m-auto" src="uv.png" alt="" width="100px" height="100px" />
@@ -102,7 +102,7 @@ function Home() {
 
                 </div>
             </div>
-            <div className="flex gap-32">
+            <div className="flex gap-16">
                 <div className="mt-10">
                     <div className="rounded-lg border-2 w-80">
                         <div className="flex justify-between p-3">
