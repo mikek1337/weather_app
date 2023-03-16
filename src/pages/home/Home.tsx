@@ -1,15 +1,22 @@
 import React from "react";
-
+import UseFetchHook from '../../common/hooks/UseFetchHook';
+import {getFullDay} from '../../common/utils/utils';
 function Home() {
+    const { isLoading, error, data } = UseFetchHook('currentWeather', "https://api.open-meteo.com/v1/forecast?latitude=9.02&longitude=38.75&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto");
+    if (isLoading) return 'loading'
+    if (error) return 'reload me'
+    let index:string = data.current_weather.time.split("T")[1].split(":")[0];
+    console.log(index.substring(0,1));
+    index = index[0].includes('0')?index.substring(1,2):index
     return (
-        <div>
-            <div className="flex gap-16 ">
-                <div className="rounded-lg w-80 h-fit border-2 ">
+        <div className="px-16">
+            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full items-center">
+                <div className="rounded-lg w-80 h-fit border-2 shadow-xl ">
                     <div className="p-2 mt-10">
-                        <img src="cloudy.png" alt="" width="200px" height="200px" />
+                        <img className="" src="cloudy.gif" alt="" width="200px" height="200px" />
                     </div>
                     <div className="ml-2 pr-4 mt-4">
-                        <h1 className="font-bold text-4xl">26 &deg;C</h1>
+                        <h1 className="font-bold text-4xl">{data.current_weather.temperature} &deg;C</h1>
                         <div className="mt-4 flex items-center gap-2">
                             <img src="cloudy.png" width="30px" height="30px" />
                             <h5 className="text-sm">Cloudy</h5>
@@ -29,39 +36,39 @@ function Home() {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                                 </svg>
                             </span>
-                            <h5>{new Date().toLocaleString()}</h5>
+                            <h5>{new Date(data.current_weather.time).toDateString() + ' ' + new Date(data.current_weather.time).toLocaleTimeString()}</h5>
                         </div>
                     </div>
 
                 </div>
-                <div className="rounded-lg border-2 w-fit  flex">
-                    <div className="p-2">
-                        <div className="rounded-lg border-2 w-60 h-fit p-5">
+                <div className="rounded-lg  w-full  grid grid-cols-3  ">
+                    <div className="p-2 w-full shadow-xl">
+                        <div className="rounded-lg border-2 w-full h-80 p-5">
                             <h5 className="py-2">Wind status</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="wind-energy.png" alt="" width="100px" height="100px" />
+                                <img className="m-auto" src="wind-energy.png" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-between mt-2">
-                                <h5 className="font-bold">26 km/hr</h5>
-                                <h5 className="font-bold">{new Date().toLocaleTimeString()}</h5>
+                                <h5 className="font-bold">{data.current_weather.windspeed} km/hr</h5>
+                                <h5 className="font-bold">{ }</h5>
                             </div>
                         </div>
-                        <div className="rounded-lg border-2 w-full h-fit mt-5">
+                        <div className="rounded-lg border-2 w-full h-fit mt-5 ">
                             <div className="flex justify-between px-1 items-center">
                                 <h5>Humdity</h5>
                                 <img className="m-1" src="humidity.png" width="30px" height="30px" />
                             </div>
-                            <h5 className="font-bold text-xl px-2">26%</h5>
+                            <h5 className="font-bold text-xl px-2">{data.hourly.relativehumidity_2m[index] + data.hourly_units.relativehumidity_2m}</h5>
                         </div>
                     </div>
-                    <div className="p-2">
-                        <div className="rounded-lg border-2 w-60 h-fit p-5">
+                    <div className="p-2 w-full shadow-xl">
+                        <div className="rounded-lg border-2 w-full h-80 p-5">
                             <h5 className="py-2">UV index</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="uv.png" alt="" width="100px" height="100px" />
+                                <img className="m-auto" src="uv.png" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-center mt-2">
-                                <h5 className="font-bold">26UV</h5>
+                                <h5 className="font-bold">{data.daily.uv_index_max[0]}UV</h5>
 
                             </div>
                         </div>
@@ -70,11 +77,11 @@ function Home() {
                                 <h5>Visiblity</h5>
                                 <img src="view.png" width="40px" height="40px" />
                             </div>
-                            <h5 className="font-bold text-xl px-2">26%</h5>
+                            <h5 className="font-bold text-xl px-2">{data.hourly.visibility[index] / 1000} KM</h5>
                         </div>
                     </div>
-                    <div className="p-2">
-                        <div className="rounded-lg border-2 w-60 h-fit p-5">
+                    <div className="p-2 w-full shadow-xl">
+                        <div className="rounded-lg border-2 w-full h-80 p-5">
                             <h5 className="py-1">Sunrise and Sunset</h5>
                             <div className="m-auto py-6">
                                 <img className="m-auto" src="uv.png" alt="" width="100px" height="100px" />
@@ -82,11 +89,11 @@ function Home() {
                             <div className="flex justify-between items-center">
                                 <div className="flex flex-col items-center">
                                     <img className="self-center" src="sunrise.png" alt="" width="20px" height="20px" />
-                                    <h5 className="font-bold text-sm">sunrise</h5>
+                                    <h5 className="font-bold text-sm">{new Date(data.daily.sunrise[0]).toLocaleTimeString()}</h5>
                                 </div>
                                 <div className="flex flex-col  items-center">
                                     <img src="sunrise.png" width="20px" height="20px" />
-                                    <h5 className="font-bold text-sm">sunset</h5>
+                                    <h5 className="font-bold text-sm">{new Date(data.daily.sunset[0]).toLocaleTimeString()}</h5>
                                 </div>
 
                             </div>
@@ -96,49 +103,24 @@ function Home() {
                                 <h5>Feels like</h5>
                                 <img src="hot.png" width="40px" height="40px" />
                             </div>
-                            <h5 className="font-bold text-xl px-2">26%</h5>
+                            <h5 className="font-bold text-xl px-2">{data.hourly.apparent_temperature[index]} &deg;C</h5>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div className="flex gap-16">
-                <div className="mt-10">
-                    <div className="rounded-lg border-2 w-80">
+            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full">
+                <div className="mt-10 shadow-xl">
+                    <div className="rounded-lg border-2 w-80 object-contain">
+                        {data.daily.temperature_2m_max.map((index:number,value:any)=>
                         <div className="flex justify-between p-3">
-                            <h3>26 &deg;C</h3>
-                            <h3>Tuesday</h3>
+                            <h3 className="font-semibold text-lg">{index} &deg;C</h3>
+                            <h3>{getFullDay(new Date(data.daily.time[value]).getDay())}</h3>
                         </div>
-                        <div className="flex justify-between p-3">
-                            <h3>26 &deg;C</h3>
-                            <h3>Wednesday</h3>
-                        </div>
-                        <div className="flex justify-between p-3">
-                            <h3>26 &deg;C</h3>
-                            <h3>Thursday</h3>
-                        </div>
-                        <div className="flex justify-between p-3">
-                            <h3>26 &deg;C</h3>
-                            <h3>Friday</h3>
-                        </div>
-                        <div className="flex justify-between p-3">
-                            <h3>26 &deg;C</h3>
-                            <h3>Tuesday</h3>
-                        </div>
-                        <div className="flex justify-between px-3 pt-3">
-                            <h3>26 &deg;C</h3>
-                            <h3>Tuesday</h3>
-                        </div>
-                        <div  className="shadow-lg rounded-full bg-white relative left-[40%] bottom-1 border-2 w-fit p-2 -z-10">
-                            <span>
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                </svg>
-                            </span>
-                        </div>
+                        )}
                     </div>
                 </div>
-                <div className="border-2 rounded-lg mt-10 w-full">
+                <div className="border-2 rounded-lg mt-10 w-full shadow-xl">
 
                 </div>
             </div>

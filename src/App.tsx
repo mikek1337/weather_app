@@ -1,10 +1,13 @@
 
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {QueryClientProvider, QueryClient} from 'react-query';
 import Home from './pages/home/Home'
+const queryClient = new QueryClient();
 function App() {
 
   return (
+    <QueryClientProvider client={queryClient}>
     <div className="max-h-screen flex flex-row">
 
       <div className="shadow-xl rounded-full w-20 backdrop-blur-lg  h-[50em] border-2 my-10 mx-7 flex flex-col items-center">
@@ -36,7 +39,7 @@ function App() {
         </span>
 
       </div>
-      <div className='my-10 ml-5'>
+      <div className='my-10 w-full'>
       <BrowserRouter>
       <Routes>
         <Route index element={<Home/>}></Route>
@@ -44,6 +47,7 @@ function App() {
       </BrowserRouter>
       </div>
     </div>
+    </QueryClientProvider>
   )
 }
 
