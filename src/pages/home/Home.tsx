@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UseFetchHook from '../../common/hooks/UseFetchHook';
-import {getFullDay} from '../../common/utils/utils';
+import { getFullDay } from '../../common/utils/utils';
+import Loading from "../../common/components/Loading";
+import Chart from 'chart.js/auto'
 function Home() {
+    // request to the api using a custom hook
     const { isLoading, error, data } = UseFetchHook('currentWeather', "https://api.open-meteo.com/v1/forecast?latitude=9.02&longitude=38.75&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto");
-    if (isLoading) return 'loading'
-    if (error) return 'reload me'
-    let index:string = data.current_weather.time.split("T")[1].split(":")[0];
-    console.log(index.substring(0,1));
-    index = index[0].includes('0')?index.substring(1,2):index
+    if (isLoading) { return <Loading /> }
+    if (error) return 'reload me';
+   const createChart = ()=>{
+    const ctx =  document.getElementById('chart') as HTMLCanvasElement;
+    const chart = new Chart(
+        ctx,
+        {
+            type: 'line',
+            data: {
+                labels: data.daily.time.map((lable: string, index: number) => lable),
+                datasets: [
+                    {
+                        label: "Date",
+                        data: data.daily.temperature_2m_max.map((value: number, index: number) => value)
+                    }
+                ]
+            }
+        }
+    )
+    console.log("here")
+   }
+
+    // get the index from the current timestamp
+    let index: string = data.current_weather.time.split("T")[1].split(":")[0];
+    index = index[0].includes('0') ? index.substring(1, 2) : index
+
     return (
         <div className="px-16">
             <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full items-center">
@@ -112,16 +136,16 @@ function Home() {
             <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full">
                 <div className="mt-10 shadow-xl">
                     <div className="rounded-lg border-2 w-80 object-contain">
-                        {data.daily.temperature_2m_max.map((index:number,value:any)=>
-                        <div className="flex justify-between p-3">
-                            <h3 className="font-semibold text-lg">{index} &deg;C</h3>
-                            <h3>{getFullDay(new Date(data.daily.time[value]).getDay())}</h3>
-                        </div>
+                        {data.daily.temperature_2m_max.map((index: number, value: any) =>
+                            <div className="flex justify-between p-3" key={value}>
+                                <h3 className="font-semibold text-lg">{index} &deg;C</h3>
+                                <h3>{getFullDay(new Date(data.daily.time[value]).getDay())}</h3>
+                            </div>
                         )}
                     </div>
                 </div>
-                <div className="border-2 rounded-lg mt-10 w-full shadow-xl">
-
+                <div className="border-2 rounded-lg mt-10 w-full shadow-xl" >
+                    <canvas id="chart" onLoadCapture={createChart} ></canvas>
                 </div>
             </div>
         </div>
