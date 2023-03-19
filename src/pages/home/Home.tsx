@@ -8,25 +8,25 @@ function Home() {
     const { isLoading, error, data } = UseFetchHook('currentWeather', "https://api.open-meteo.com/v1/forecast?latitude=9.02&longitude=38.75&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto");
     if (isLoading) { return <Loading /> }
     if (error) return 'reload me';
-   const createChart = ()=>{
-    const ctx =  document.getElementById('chart') as HTMLCanvasElement;
-    const chart = new Chart(
-        ctx,
-        {
-            type: 'line',
-            data: {
-                labels: data.daily.time.map((lable: string, index: number) => lable),
-                datasets: [
-                    {
-                        label: "Date",
-                        data: data.daily.temperature_2m_max.map((value: number, index: number) => value)
-                    }
-                ]
+    const createChart = () => {
+        const ctx = document.getElementById('chart') as HTMLCanvasElement;
+        const chart = new Chart(
+            ctx,
+            {
+                type: 'line',
+                data: {
+                    labels: data.daily.time.map((lable: string, index: number) => lable),
+                    datasets: [
+                        {
+                            label: "Date",
+                            data: data.daily.temperature_2m_max.map((value: number, index: number) => value)
+                        }
+                    ]
+                }
             }
-        }
-    )
-    console.log("here")
-   }
+        )
+        console.log("here")
+    }
 
     // get the index from the current timestamp
     let index: string = data.current_weather.time.split("T")[1].split(":")[0];
@@ -70,7 +70,7 @@ function Home() {
                         <div className="rounded-lg border-2 w-full h-80 p-5">
                             <h5 className="py-2">Wind status</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="wind-energy.png" alt="" width="150px" height="150px" />
+                                <img className="m-auto" src="windmill.gif" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-between mt-2">
                                 <h5 className="font-bold">{data.current_weather.windspeed} km/hr</h5>
@@ -89,7 +89,7 @@ function Home() {
                         <div className="rounded-lg border-2 w-full h-80 p-5">
                             <h5 className="py-2">UV index</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="uv.png" alt="" width="150px" height="150px" />
+                                <img className="m-auto" src="uv-protection.gif" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-center mt-2">
                                 <h5 className="font-bold">{data.daily.uv_index_max[0]}UV</h5>
@@ -108,15 +108,15 @@ function Home() {
                         <div className="rounded-lg border-2 w-full h-80 p-5">
                             <h5 className="py-1">Sunrise and Sunset</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="uv.png" alt="" width="100px" height="100px" />
+                                <img className="m-auto" src="uv.png" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-between items-center">
                                 <div className="flex flex-col items-center">
-                                    <img className="self-center" src="sunrise.png" alt="" width="20px" height="20px" />
+                                    <img className="self-center" src="sunrise.gif" alt="" width="40px" height="40px" />
                                     <h5 className="font-bold text-sm">{new Date(data.daily.sunrise[0]).toLocaleTimeString()}</h5>
                                 </div>
                                 <div className="flex flex-col  items-center">
-                                    <img src="sunrise.png" width="20px" height="20px" />
+                                    <img src="sunset.gif" width="40px" height="40px" />
                                     <h5 className="font-bold text-sm">{new Date(data.daily.sunset[0]).toLocaleTimeString()}</h5>
                                 </div>
 
@@ -145,7 +145,7 @@ function Home() {
                     </div>
                 </div>
                 <div className="border-2 rounded-lg mt-10 w-full shadow-xl" >
-                    <canvas id="chart" onLoadCapture={createChart} ></canvas>
+                    <canvas id="chart" onLoad={createChart} ></canvas>
                 </div>
             </div>
         </div>
