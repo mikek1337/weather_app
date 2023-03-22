@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import UseFetchHook from '../../common/hooks/UseFetchHook';
 import { getFullDay } from '../../common/utils/utils';
 import Loading from "../../common/components/Loading";
 import Chart from 'chart.js/auto'
 function Home() {
     // request to the api using a custom hook
-    const { isLoading, error, data } = UseFetchHook('currentWeather', "https://api.open-meteo.com/v1/forecast?latitude=9.02&longitude=38.75&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto");
+    const [latitude, setLatitude] = useState(9.02);
+    const [longitude, setLongtude] = useState(38.75);
+    navigator.geolocation.getCurrentPosition((position: GeolocationPosition) =>{ setLatitude(position.coords.latitude); setLongtude(position.coords.longitude)}, (error: any) => console.log(error));
+    const { isLoading, error, data } = UseFetchHook('currentWeather', `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto`);
     if (isLoading) { return <Loading /> }
     if (error) return 'reload me';
     const createChart = () => {
