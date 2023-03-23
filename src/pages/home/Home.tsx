@@ -19,7 +19,7 @@ function Home() {
     index = index[0].includes('0') ? index.substring(1, 2) : index
 
     return (
-        <div className="px-16">
+        <div className="px-16 ">
             <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full items-center ">
                 <div className="rounded-lg w-80 h-fit border-2 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                     <div className="p-2 mt-10">
@@ -94,15 +94,15 @@ function Home() {
                         <div className="rounded-lg border-2 w-full h-80 p-5 dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                             <h5 className="py-1">Sunrise and Sunset</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="uv.png" alt="" width="150px" height="150px" />
+                                <img className="m-auto" src="sunrise.png" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-between items-center">
                                 <div className="flex flex-col items-center">
-                                    <img className="self-center" src="sunrise.gif" alt="" width="40px" height="40px" />
+                                    <img className="self-center" src="sunrise.png" alt="" width="40px" height="40px" />
                                     <h5 className="font-bold text-sm">{new Date(data.daily.sunrise[0]).toLocaleTimeString()}</h5>
                                 </div>
                                 <div className="flex flex-col  items-center">
-                                    <img src="sunset.gif" width="40px" height="40px" />
+                                    <img src="sea.png" width="40px" height="40px" />
                                     <h5 className="font-bold text-sm">{new Date(data.daily.sunset[0]).toLocaleTimeString()}</h5>
                                 </div>
 
@@ -119,9 +119,9 @@ function Home() {
 
                 </div>
             </div>
-            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-fit">
+            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-fit ">
                 <div className="mt-10 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black ">
-                    <div className="rounded-lg border-2 w-80 object-contain">
+                    <div className="rounded-lg border-2 w-80 object-contain dark:border-0">
                         {data.daily.temperature_2m_max.map((index: number, value: any) =>
                             <div className="flex justify-between p-3" key={value}>
                                 <h3 className="font-semibold text-lg">{index} &deg;C</h3>
