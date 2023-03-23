@@ -2,10 +2,19 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import {QueryClientProvider, QueryClient} from 'react-query';
+import { Chart as ChartJS, CategoryScale,LinearScale, PointElement, LineElement, Legend, Tooltip } from 'chart.js';
 import Home from './pages/home/Home'
 import Setting from './pages/setting/Index';
 import Stat from './pages/stat/Index';
 const queryClient = new QueryClient();
+ChartJS.register(
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale
+)
 function App() {
   if(localStorage.getItem("theme") == "dark")
   {
@@ -15,6 +24,7 @@ function App() {
   {
     document.documentElement.classList.remove('dark');
   }
+
   return (
     <QueryClientProvider client={queryClient}>
     <div className="max-h-screen flex flex-row">

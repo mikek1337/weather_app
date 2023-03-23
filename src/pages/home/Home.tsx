@@ -3,6 +3,7 @@ import UseFetchHook from '../../common/hooks/UseFetchHook';
 import { getFullDay } from '../../common/utils/utils';
 import Loading from "../../common/components/Loading";
 import Chart from 'chart.js/auto'
+import { Line } from "react-chartjs-2";
 function Home() {
     // request to the api using a custom hook
     const [latitude, setLatitude] = useState(9.02);
@@ -11,25 +12,7 @@ function Home() {
     const { isLoading, error, data } = UseFetchHook('currentWeather', `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto`);
     if (isLoading) { return <Loading /> }
     if (error) return 'reload me';
-    const createChart = () => {
-        const ctx = document.getElementById('chart') as HTMLCanvasElement;
-        const chart = new Chart(
-            ctx,
-            {
-                type: 'line',
-                data: {
-                    labels: data.daily.time.map((lable: string, index: number) => lable),
-                    datasets: [
-                        {
-                            label: "Date",
-                            data: data.daily.temperature_2m_max.map((value: number, index: number) => value)
-                        }
-                    ]
-                }
-            }
-        )
-        console.log("here")
-    }
+
 
     // get the index from the current timestamp
     let index: string = data.current_weather.time.split("T")[1].split(":")[0];
@@ -55,7 +38,7 @@ function Home() {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                                 </svg>
                             </span>
-                            <h5 className="text-sm dark:text-gray-300">Addis Ababa, ET</h5>
+                            <h5 className="text-sm dark:text-gray-300">{data.timezone.split("/").join(" ")}</h5>
                         </div>
                         <div className="mt-1 flex items-center gap-2 pb-1 ">
                             <span dark:text-gray-300>
@@ -136,7 +119,7 @@ function Home() {
 
                 </div>
             </div>
-            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full ">
+            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-fit">
                 <div className="mt-10 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black ">
                     <div className="rounded-lg border-2 w-80 object-contain">
                         {data.daily.temperature_2m_max.map((index: number, value: any) =>
@@ -147,8 +130,17 @@ function Home() {
                         )}
                     </div>
                 </div>
-                <div className="border-2 rounded-lg mt-10 w-full shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0" >
-                    <canvas id="chart" onLoad={createChart} ></canvas>
+                <div className="border-2 object-contain rounded-lg mt-10  shadow-xl dark:shadow-black dark:text-blue-900 dark:bg-black dark:border-0" >
+                   <Line
+                    datasetIdKey='ID'
+                    data={{
+                    labels: data.daily.time.map((lable: string, index: number) => getFullDay(new Date(lable).getDay())),
+                    datasets: [
+                        {
+                            label: "Temp",
+                            data: data.daily.temperature_2m_max.map((value: number, index: number) => value  )
+                        }
+                    ]}}/>
                 </div>
             </div>
         </div>
