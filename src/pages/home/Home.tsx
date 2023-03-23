@@ -23,7 +23,7 @@ function Home() {
             <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full items-center ">
                 <div className="rounded-lg w-80 h-fit border-2 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                     <div className="p-2 mt-10">
-                        <img className="" src="cloudy.gif" alt="" width="200px" height="200px" />
+                        <img className="" src="cloudy.png" alt="" width="200px" height="200px" />
                     </div>
                     <div className="ml-2 pr-4 mt-4">
                         <h1 className="font-bold text-4xl dark:text-gray-300">{data.current_weather.temperature} &deg;C</h1>
@@ -56,7 +56,7 @@ function Home() {
                         <div className="rounded-lg border-2 w-full h-80 p-5 dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                             <h5 className="py-2">Wind status</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="windmill.gif" alt="" width="150px" height="150px" />
+                                <img className="m-auto " src="wind-energy.png" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-between mt-2  ">
                                 <h5 className="font-bold">{data.current_weather.windspeed} km/hr</h5>
@@ -75,7 +75,7 @@ function Home() {
                         <div className="rounded-lg border-2 w-full h-80 p-5 dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                             <h5 className="py-2">UV index</h5>
                             <div className="m-auto py-6">
-                                <img className="m-auto" src="uv-protection.gif" alt="" width="150px" height="150px" />
+                                <img className="m-auto" src="uv.png" alt="" width="150px" height="150px" />
                             </div>
                             <div className="flex justify-center mt-2">
                                 <h5 className="font-bold">{data.daily.uv_index_max[0]}UV</h5>
