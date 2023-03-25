@@ -1,34 +1,38 @@
 import { useState } from "react"
 import UseFetchHook from "../../common/hooks/UseFetchHook";
 import { getFullDay } from "../../common/utils/utils";
-import { Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2';
+import { weatherInfo } from "../../common/models/weathermodel";
+interface IData {
+    label: string;
+    data: weatherInfo
+}
 function Stat() {
     const [latitude, setLatitude] = useState(8.9806);
     const [longtiude, setLongtude] = useState(38.7578);
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<weatherInfo>();
     const [error, setError] = useState(null);
-    const [graphData, setGraphData] = useState([]);
-    const [filters, setFilters] = useState([]);
+    const [graphData, setGraphData] = useState<IData[]>([]);
+    const [filters, setFilters] = useState<string[]>([]);
     const query = () => {
 
         let searchFilters = filters;
-        if(filters.length == 0)
-        {
+        if (filters.length == 0) {
             searchFilters = ["temperature_2m_max"];
         }
-        let search:string = searchFilters.join(',');
+        let search: string = searchFilters.join(',');
         setGraphData([])
         let url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longtiude}&daily=${search}&timezone=auto`;
         fetch(url)
             .then(res => res.json())
             .then(data => {
                 setData(data)
-                searchFilters.map((value:string,index:number)=>{
+                searchFilters.map((value: string, index: number) => {
                     let dataset = {
-                        label:value.split('_').join(' '),
+                        label: value.split('_').join(' '),
                         data: data.daily[value]
                     }
-                    setGraphData(prevData=>[...prevData,dataset])
+                    setGraphData(prevData => [...prevData, dataset])
                 })
             })
             .catch((reason: any) => {
@@ -55,7 +59,7 @@ function Stat() {
                         </div>
                     </div>
                     <div className="mt-2 ">
-                    <button data-target="defaultModal" data-toggle="defaultModal" className="block  shadow-sm  w-full border-2  hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        <button data-target="defaultModal" data-toggle="defaultModal" className="block  shadow-sm  w-full border-2  hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                             <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                             </svg>
@@ -64,16 +68,16 @@ function Stat() {
                     <div id="defaultModal" aria-hidden="true" className="dark:bg-black  block-foucs:block  dark:text-white w-full mt-3  justify-center items-center rounded-lg shadow-xl   p-2">
                         <div className="grid grid-cols-3">
                             <div className="flex justify-center items-center gap-2">
-                            <label htmlFor="max_temp">Maximum Temperature</label>
-                                <input type="checkbox" name="" id="max_temp" onChange={(e)=>{e.target.checked?setFilters(prevFilter=>[...prevFilter,"temperature_2m_max"]):""}}/>
+                                <label htmlFor="max_temp">Maximum Temperature</label>
+                                <input type="checkbox" name="" id="max_temp" onChange={(e) => { e.target.checked ? setFilters(prevFilter => [...prevFilter, "temperature_2m_max"]) : "" }} />
                             </div>
                             <div className="flex justify-center items-center gap-2">
-                            <label htmlFor="max_temp">Precipitation Sum</label>
-                                <input type="checkbox" name="" id="max_temp" onChange={(e)=>{e.target.checked?setFilters(prevFilter=>[...prevFilter,"precipitation_sum"]):""}}/>
+                                <label htmlFor="max_temp">Precipitation Sum</label>
+                                <input type="checkbox" name="" id="max_temp" onChange={(e) => { e.target.checked ? setFilters(prevFilter => [...prevFilter, "precipitation_sum"]) : "" }} />
                             </div>
                             <div className="flex justify-center items-center gap-2">
-                            <label htmlFor="max_temp">Maximum Wind Speed</label>
-                                <input type="checkbox" name="" id="max_temp" onChange={(e)=>{e.target.checked?setFilters(prevFilter=>[...prevFilter,"windspeed_10m_max"]):""}}/>
+                                <label htmlFor="max_temp">Maximum Wind Speed</label>
+                                <input type="checkbox" name="" id="max_temp" onChange={(e) => { e.target.checked ? setFilters(prevFilter => [...prevFilter, "windspeed_10m_max"]) : "" }} />
                             </div>
 
                         </div>
@@ -82,11 +86,11 @@ function Stat() {
                     </div>
                 </div>
                 <div className="dark:bg-black">
-                {data && <Line className="w-full"
+                    {data && <Line className="w-full"
                         datasetIdKey='id'
                         data={{
                             labels: data.daily.time.map((value: any, index: number) => getFullDay(new Date(value).getDay())),
-                            datasets:graphData
+                            datasets: graphData
                         }}
                     />}
 

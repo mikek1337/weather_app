@@ -2,7 +2,8 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip } from 'chart.js';
+import Chart from 'chart.js/auto';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip, Colors } from 'chart.js';
 import Home from './pages/home/Home'
 import Setting from './pages/setting/Index';
 import Stat from './pages/stat/Index';
@@ -13,7 +14,8 @@ ChartJS.register(
   LineElement,
   PointElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
+  Colors
 )
 function App() {
   if (localStorage.getItem("theme") == "dark") {

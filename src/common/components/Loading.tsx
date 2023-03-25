@@ -1,9 +1,12 @@
-function Loading()
-{
-    return(
-        <div className="bg-opacity-5 h-screen absolute z-10 border-2 w-[90%]">
-            
+function Loading() {
+    return (
+        //tailwindcss loading animation
+        <div className="flex justify-center items-center h-screen">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 dark:border-white">
+            </div>
         </div>
+
+
     )
 }
 

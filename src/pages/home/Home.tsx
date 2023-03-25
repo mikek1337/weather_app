@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import UseFetchHook from '../../common/hooks/UseFetchHook';
 import { getFullDay } from '../../common/utils/utils';
 import Loading from "../../common/components/Loading";
-import Chart from 'chart.js/auto'
+import { currentWeather, requestData } from '../../common/models/weathermodel';
 import { Line } from "react-chartjs-2";
 function Home() {
     // request to the api using a custom hook
     const [latitude, setLatitude] = useState(9.02);
     const [longitude, setLongtude] = useState(38.75);
-    navigator.geolocation.getCurrentPosition((position: GeolocationPosition) =>{ setLatitude(position.coords.latitude); setLongtude(position.coords.longitude)}, (error: any) => console.log(error));
-    const { isLoading, error, data } = UseFetchHook('currentWeather', `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto`);
+    navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => { setLatitude(position.coords.latitude); setLongtude(position.coords.longitude) }, (error: any) => console.log(error));
+    const { isLoading, error, data }: any = UseFetchHook('currentWeather', `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto`);
     if (isLoading) { return <Loading /> }
     if (error) return 'reload me';
 
@@ -20,7 +20,7 @@ function Home() {
 
     return (
         <div className="px-16 ">
-            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-full items-center ">
+            <div className="grid md:grid-cols-[2fr_80%_2fr]  gap-10 md:w-full w-fit items-center ">
                 <div className="rounded-lg w-80 h-fit border-2 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                     <div className="p-2 mt-10">
                         <img className="" src="cloudy.png" alt="" width="200px" height="200px" />
@@ -51,7 +51,7 @@ function Home() {
                     </div>
 
                 </div>
-                <div className="rounded-lg  w-full  grid grid-cols-3  dark:shadow-black">
+                <div className="rounded-lg  w-full  md:grid grid-cols-3 gid-rows-3  dark:shadow-black ">
                     <div className="p-2 w-full shadow-xl ">
                         <div className="rounded-lg border-2 w-full h-80 p-5 dark:shadow-black dark:text-gray-300 dark:bg-black dark:border-0">
                             <h5 className="py-2">Wind status</h5>
@@ -119,8 +119,8 @@ function Home() {
 
                 </div>
             </div>
-            <div className="grid grid-cols-[2fr_80%_2fr] gap-10 w-fit ">
-                <div className="mt-10 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black ">
+            <div className="grid grid-cols-2 gap-10 w-full ">
+                <div className="mt-10 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black h-fit">
                     <div className="rounded-lg border-2 w-80 object-contain dark:border-0">
                         {data.daily.temperature_2m_max.map((index: number, value: any) =>
                             <div className="flex justify-between p-3" key={value}>
@@ -130,17 +130,18 @@ function Home() {
                         )}
                     </div>
                 </div>
-                <div className="border-2 object-contain rounded-lg mt-10  shadow-xl dark:shadow-black dark:text-blue-900 dark:bg-black dark:border-0" >
-                   <Line
-                    datasetIdKey='ID'
-                    data={{
-                    labels: data.daily.time.map((lable: string, index: number) => getFullDay(new Date(lable).getDay())),
-                    datasets: [
-                        {
-                            label: "Temp",
-                            data: data.daily.temperature_2m_max.map((value: number, index: number) => value  )
-                        }
-                    ]}}/>
+                <div className="border-2  object-contain rounded-lg mt-10     shadow-xl dark:shadow-black dark:text-blue-900 dark:bg-black dark:border-0" >
+                    <Line className="w-full "
+                        datasetIdKey='ID'
+                        data={{
+                            labels: data.daily.time.map((lable: string, index: number) => getFullDay(new Date(lable).getDay())),
+                            datasets: [
+                                {
+                                    label: "Temp",
+                                    data: data.daily.temperature_2m_max.map((value: number, index: number) => value)
+                                }
+                            ]
+                        }} />
                 </div>
             </div>
         </div>
