@@ -38,8 +38,8 @@ function Stat() {
             .catch((reason: any) => {
                 setError(reason);
             })
-
     }
+    
     return (
         <div className="h-full w-fit ">
             <h1 className="font-semibold text-3xl dark:text-gray-300">Stats</h1>
@@ -59,13 +59,15 @@ function Stat() {
                         </div>
                     </div>
                     <div className="mt-2 ">
-                        <button data-target="defaultModal" data-toggle="defaultModal" className="block  shadow-sm  w-full border-2  hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                        <button data-target="defaultModal" data-toggle="defaultModal" className="block  shadow-sm  w-full border-2  hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black dark:text-white dark:border-0 dark:focus:outline-none" type="button">
                             <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                             </svg>
                         </button>
                     </div>
-                    <div id="defaultModal" aria-hidden="true" className="dark:bg-black  block-foucs:block  dark:text-white w-full mt-3  justify-center items-center rounded-lg shadow-xl   p-2">
+                
+                    
+                    <div id="defaultModal" aria-hidden="true" className="hidden dark:bg-black  block-foucs:block  dark:text-white w-full mt-3  justify-center items-center rounded-lg shadow-xl   p-2">
                         <div className="grid grid-cols-3">
                             <div className="flex justify-center items-center gap-2">
                                 <label htmlFor="max_temp">Maximum Temperature</label>

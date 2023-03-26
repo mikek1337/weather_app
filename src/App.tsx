@@ -7,6 +7,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import Home from './pages/home/Home'
 import Setting from './pages/setting/Index';
 import Stat from './pages/stat/Index';
+import NotFound from './common/components/NotFound';
 const queryClient = new QueryClient();
 ChartJS.register(
   Tooltip,
@@ -77,6 +78,7 @@ function App() {
               <Route index element={<Home />}></Route>
               <Route path='setting' element={<Setting />}></Route>
               <Route path='stat' element={<Stat />}></Route>
+              <Route path='*' element={<NotFound />}></Route>
             </Routes>
 
           </div>

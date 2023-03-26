@@ -4,6 +4,8 @@ import { getFullDay } from '../../common/utils/utils';
 import Loading from "../../common/components/Loading";
 import { currentWeather, requestData } from '../../common/models/weathermodel';
 import { Line } from "react-chartjs-2";
+import ErrorPage from "../../common/components/ErrorPage";
+
 function Home() {
     // request to the api using a custom hook
     const [latitude, setLatitude] = useState(9.02);
@@ -120,8 +122,8 @@ function Home() {
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-10 w-full ">
-                <div className="mt-10 shadow-xl dark:shadow-black dark:text-gray-300 dark:bg-black h-fit">
-                    <div className="rounded-lg border-2 w-80 object-contain dark:border-0">
+                <div className="mt-10 shadow-xl rounded-lg   dark:shadow-black dark:text-gray-300 dark:bg-black ">
+                    <div className="rounded-lg border-2  dark:border-0 h-full">
                         {data.daily.temperature_2m_max.map((index: number, value: any) =>
                             <div className="flex justify-between p-3" key={value}>
                                 <h3 className="font-semibold text-lg">{index} &deg;C</h3>
