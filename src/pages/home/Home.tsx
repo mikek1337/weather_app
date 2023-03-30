@@ -13,7 +13,7 @@ function Home() {
     navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => { setLatitude(position.coords.latitude); setLongtude(position.coords.longitude) }, (error: any) => console.log(error));
     const { isLoading, error, data }: any = UseFetchHook('currentWeather', `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=relativehumidity_2m,apparent_temperature,visibility&daily=temperature_2m_max,sunrise,sunset,uv_index_max&current_weather=true&timezone=auto`);
     if (isLoading) { return <Loading /> }
-    if (error) return 'reload me';
+    if (error) return <ErrorPage/>;
 
 
     // get the index from the current timestamp
