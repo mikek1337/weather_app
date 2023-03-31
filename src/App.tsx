@@ -1,6 +1,6 @@
 
 import './App.css'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Routes, Route, Link } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query';
 import Chart from 'chart.js/auto';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip, Colors } from 'chart.js';
@@ -27,7 +27,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <QueryClientProvider client={queryClient}>
         <div className="h-screen flex flex-row">
 
@@ -84,7 +84,7 @@ function App() {
           </div>
         </div>
       </QueryClientProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
