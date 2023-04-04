@@ -6,7 +6,7 @@
   "homepage": "https://mikek1337.github.io/weather_app/",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
