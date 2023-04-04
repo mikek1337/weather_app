@@ -27,7 +27,7 @@ function App() {
   }
 
   return (
-    <HashRouter basename="https://mikek1337.github.io/weather_app/">
+    <HashRouter >
       <QueryClientProvider client={queryClient}>
         <div className="h-screen flex flex-row">
 
