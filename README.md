@@ -21,6 +21,6 @@ npm run dev
 ```
 Go to http://localhost:5173
 ## Screenshot
-!.[].(s1.png)
+![](./s1.png)
 ### Author
  * Mikias kegnlyew - mikekegnlyew@gmail.com
